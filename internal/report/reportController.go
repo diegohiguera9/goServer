@@ -89,8 +89,6 @@ func CalculateReport(c *fiber.Ctx) error {
 	for _, v := range jsonResponse.Orders {
 
 		TotalReponse = TotalReponse + v.Total
-		TotalTip = TotalTip + v.Tip
-		TotalDelivery = TotalDelivery + v.Delivery
 
 		userEmail := v.User.Email
 
@@ -101,8 +99,6 @@ func CalculateReport(c *fiber.Ctx) error {
 		}
 
 		userOrder.Total += v.Total
-		userOrder.TotalTip += v.Tip
-		userOrder.TotalDelivery += v.Delivery
 
 		if v.Electronic {
 			TotalElectronic = TotalElectronic + v.Total
@@ -116,7 +112,11 @@ func CalculateReport(c *fiber.Ctx) error {
 
 		if v.Status == "pagada" {
 			TotalCobrado = TotalCobrado + v.Total
+			TotalTip = TotalTip + v.Tip
+			TotalDelivery = TotalDelivery + v.Delivery
 			userOrder.TotalCobrado += v.Total
+			userOrder.TotalTip += v.Tip
+			userOrder.TotalDelivery += v.Delivery
 		}
 
 		userOrder.TotalCash = userOrder.Total - userOrder.TotalBank
